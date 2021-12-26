@@ -1,0 +1,24 @@
+import org.apache.spark.sql.SparkSession
+
+val spark = SparkSession.builder().getOrCreate()
+
+val df = spark.read.option("header","true").option("inferSchema","true").csv("Netflix_2011_2016.csv")
+
+//df.columns
+
+//df.schema
+
+//df.head(5)
+
+//df.describe().show()
+
+// Create a new dataframe with a column called HV Ratio that
+// is the ratio of the High Price versus volume of stock traded
+// for a day.
+val df2 = df.withColumn("HV Ratio",df("High")/df("Volume"))
+
+// What day had the Peak High in Price?
+//df2.groupBy("High").max().show()
+
+// What is the mean of the Close column?
+df.groupBy("Close").mean().show()
